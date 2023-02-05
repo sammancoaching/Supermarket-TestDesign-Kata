@@ -5,16 +5,31 @@
 #include "ShoppingCart.h"
 #include "Teller.h"
 
-TEST(SuperMarketTest, TwoNormalItems) {
-    //Arrange
-    auto catalog{FakeCatalog()};
-    Product toothbrush("toothbrush", ProductUnit::Each);
-    catalog.addProduct(toothbrush, 0.99);
-    Product rice("rice", ProductUnit::Each);
-    catalog.addProduct(rice, 2.99);
-    Teller teller(catalog);
-    ShoppingCart cart;
 
+class SuperMarketTests : public ::testing::Test {
+public:
+    SuperMarketTests() : teller(catalog),
+                         toothbrush("toothbrush", ProductUnit::Each),
+                         rice("rice", ProductUnit::Each),
+                         cherryTomatoes("cherry tomato box", ProductUnit::Each),
+                         apples("apples", ProductUnit::Kilo) {
+        catalog.addProduct(toothbrush, 0.99);
+        catalog.addProduct(rice, 2.99);
+        catalog.addProduct(cherryTomatoes, 0.69);
+        catalog.addProduct(apples, 1.99);
+    }
+
+protected:
+    FakeCatalog catalog;
+    Teller teller;
+    ShoppingCart cart;
+    Product toothbrush;
+    Product rice;
+    Product cherryTomatoes;
+    Product apples;
+};
+
+TEST_F(SuperMarketTests, TwoNormalItems) {
     //Act
     cart.addItem(toothbrush);
     cart.addItem(rice);
@@ -24,14 +39,7 @@ TEST(SuperMarketTest, TwoNormalItems) {
     EXPECT_FLOAT_EQ(3.98, receipt.getTotalPrice());
 }
 
-TEST(SuperMarketTest, BuyTwoGetOneFree) {
-    //Arrange
-    auto catalog{FakeCatalog()};
-    Product toothbrush("toothbrush", ProductUnit::Each);
-    catalog.addProduct(toothbrush, 0.99);
-    Teller teller(catalog);
-    ShoppingCart cart;
-
+TEST_F(SuperMarketTests, BuyTwoGetOneFree) {
     //Act
     cart.addItem(toothbrush);
     cart.addItem(toothbrush);
@@ -43,14 +51,7 @@ TEST(SuperMarketTest, BuyTwoGetOneFree) {
     EXPECT_FLOAT_EQ(1.98, receipt.getTotalPrice());
 }
 
-TEST(SuperMarketTest, XForYDiscount) {
-    //Arrange
-    auto catalog{FakeCatalog()};
-    Product cherryTomatoes("cherry tomato box", ProductUnit::Each);
-    catalog.addProduct(cherryTomatoes, 0.69);
-    Teller teller(catalog);
-    ShoppingCart cart;
-
+TEST_F(SuperMarketTests, XForYDiscount) {
     //Act
     cart.addItem(cherryTomatoes);
     cart.addItem(cherryTomatoes);
@@ -61,14 +62,7 @@ TEST(SuperMarketTest, XForYDiscount) {
     EXPECT_FLOAT_EQ(0.99, receipt.getTotalPrice());
 }
 
-TEST(SuperMarketTest, 5ForYDiscount) {
-    //Arrange
-    auto catalog{FakeCatalog()};
-    Product apples("apples", ProductUnit::Kilo);
-    catalog.addProduct(apples, 1.99);
-    Teller teller(catalog);
-    ShoppingCart cart;
-
+TEST_F(SuperMarketTests, 5ForYDiscount) {
     //Act
     cart.addItemQuantity(apples, 5);
     teller.addSpecialOffer(SpecialOfferType::FiveForAmount, apples, 6.99);
