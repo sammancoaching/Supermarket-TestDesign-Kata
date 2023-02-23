@@ -4,6 +4,7 @@
 
 Assumes current directory is root of Supermarket repository.
 
+    $ cd cpp
     $ mkdir build
     $ cd build
     $ cmake ..
@@ -11,16 +12,17 @@ Assumes current directory is root of Supermarket repository.
 
 ### Run test using ctest
 
-    $ cd build
+    $ cd cpp/build
     $ ctest
 
 Use extra verbose to show name of tests.
 
+    $ cd cpp/build
     $ ctest -VV
 
 ### Run test binary
 
-    $ cd build
+    $ cd cpp/build
     $ ./test-googletest/supermarket-google-test
 
 ## Google Test documentation
