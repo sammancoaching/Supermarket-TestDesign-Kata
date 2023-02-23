@@ -37,6 +37,7 @@ describe('Supermarket', function () {
         // ACT
         cart.addItem(toothbrush);
         cart.addItem(rice)
+
         const receipt: Receipt = teller.checksOutArticlesFrom(cart);
 
         // ASSERT
@@ -52,6 +53,7 @@ describe('Supermarket', function () {
         cart.addItem(toothbrush);
         cart.addItem(toothbrush);
         teller.addSpecialOffer(SpecialOfferType.ThreeForTwo, toothbrush, catalog.getUnitPrice(toothbrush));
+
         const receipt: Receipt = teller.checksOutArticlesFrom(cart);
 
         // ASSERT
@@ -66,6 +68,7 @@ describe('Supermarket', function () {
         cart.addItem(cherryTomatoes);
         cart.addItem(cherryTomatoes);
         teller.addSpecialOffer(SpecialOfferType.TwoForAmount, cherryTomatoes, 0.99);
+
         const receipt: Receipt = teller.checksOutArticlesFrom(cart);
 
         // ASSERT
@@ -78,6 +81,7 @@ describe('Supermarket', function () {
         // ACT
         cart.addItemQuantity(apples, 5);
         teller.addSpecialOffer(SpecialOfferType.FiveForAmount, apples, 6.99);
+
         const receipt: Receipt = teller.checksOutArticlesFrom(cart);
 
         // ASSERT
