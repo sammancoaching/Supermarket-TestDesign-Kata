@@ -1,4 +1,4 @@
-# The Supermarket Receipt Introduce Test Fixture Kata
+# The Supermarket Test Design Kata
 
 This is a variation of a kata described in https://github.com/emilybache/SupermarketReceipt-Refactoring-Kata. The aim is to introduce a test fixture to avoid code duplication in the arrange parts of the existing unit tests.
 
@@ -25,7 +25,5 @@ There are four test cases that all use the following pattern:
 ## Introduce a test fixture
 
 The arrange parts of the existing test contain duplicated code. Get rid of the duplicated code by introducing a test fixture.
-
-
 
 
