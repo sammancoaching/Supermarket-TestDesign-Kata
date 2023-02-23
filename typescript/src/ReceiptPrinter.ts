@@ -7,7 +7,7 @@ export class ReceiptPrinter {
     public constructor(private readonly columns: number = 40) {
     }
 
-    public printReceipt( receipt: Receipt): string {
+    public printReceipt(receipt: Receipt): string {
         let result = "";
         for (const item of receipt.getItems()) {
             let price = this.format2Decimals(item.totalPrice);
@@ -54,11 +54,11 @@ export class ReceiptPrinter {
         }).format(number)
     }
 
-    private static presentQuantity( item: ReceiptItem): string  {
+    private static presentQuantity(item: ReceiptItem): string {
         return ProductUnit.Each == item.product.unit
             // TODO make sure this is the simplest way to make something similar to the java version
-                ? new Intl.NumberFormat('en-UK', {maximumFractionDigits: 0}).format(item.quantity)
-                : new Intl.NumberFormat('en-UK', {minimumFractionDigits: 3}).format(item.quantity);
+            ? new Intl.NumberFormat('en-UK', {maximumFractionDigits: 0}).format(item.quantity)
+            : new Intl.NumberFormat('en-UK', {minimumFractionDigits: 3}).format(item.quantity);
     }
 
     private static getWhitespace(whitespaceSize: number): string {
