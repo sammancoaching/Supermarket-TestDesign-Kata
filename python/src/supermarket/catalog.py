@@ -1,0 +1,28 @@
+from dataclasses import dataclass
+from enum import Enum
+from numbers import Number
+
+
+class ProductUnit(Enum):
+    EACH = 0
+    KILO = 2
+
+
+@dataclass(frozen=True)
+class Product:
+    name: str
+    unit: ProductUnit
+
+
+@dataclass(frozen=True)
+class ProductQuantity:
+    product: Product
+    quantity: Number
+
+
+class SupermarketCatalog:
+    def add_product(self, product: Product, price: Number) -> None:
+        raise Exception("cannot be called from a unit test - it accesses the database")
+
+    def unit_price(self, product: Product) -> Number:
+        raise Exception("cannot be called from a unit test - it accesses the database")
