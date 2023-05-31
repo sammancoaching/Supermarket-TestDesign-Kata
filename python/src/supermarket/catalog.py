@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 from enum import Enum
-from numbers import Number
 
 
 class ProductUnit(Enum):
@@ -17,12 +16,12 @@ class Product:
 @dataclass(frozen=True)
 class ProductQuantity:
     product: Product
-    quantity: Number
+    quantity: float
 
 
 class SupermarketCatalog:
-    def add_product(self, product: Product, price: Number) -> None:
+    def add_product(self, product: Product, price: float) -> None:
         raise Exception("cannot be called from a unit test - it accesses the database")
 
-    def unit_price(self, product: Product) -> Number:
+    def unit_price(self, product: Product) -> float:
         raise Exception("cannot be called from a unit test - it accesses the database")
