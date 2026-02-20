@@ -6,10 +6,10 @@ import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class SupermarketTest {
+class SupermarketTest {
 
     @Test
-    public void twoNormalItems() {
+    void twoNormalItems() {
         SupermarketCatalog catalog = new FakeCatalog();
         Product toothbrush = new Product("toothbrush", ProductUnit.EACH);
         catalog.addProduct(toothbrush, 0.99);
@@ -28,7 +28,7 @@ public class SupermarketTest {
     }
 
     @Test
-    public void buyTwoGetOneFree() {
+    void buyTwoGetOneFree() {
         SupermarketCatalog catalog = new FakeCatalog();
         Product toothbrush = new Product("toothbrush", ProductUnit.EACH);
         catalog.addProduct(toothbrush, 0.99);
@@ -47,7 +47,7 @@ public class SupermarketTest {
     }
 
     @Test
-    public void xForYDiscount() {
+    void xForYDiscount() {
         SupermarketCatalog catalog = new FakeCatalog();
         Product cherryTomatoes = new Product("cherry Tomato box", ProductUnit.EACH);
         catalog.addProduct(cherryTomatoes, 0.69);
@@ -65,7 +65,7 @@ public class SupermarketTest {
     }
 
     @Test
-    public void FiveForYDiscount() {
+    void FiveForYDiscount() {
         SupermarketCatalog catalog = new FakeCatalog();
         Product apples = new Product("apples", ProductUnit.KILO);
         catalog.addProduct(apples, 1.99);
@@ -80,4 +80,5 @@ public class SupermarketTest {
         // ASSERT
         assertEquals(6.99, receipt.getTotalPrice(), 0.01);
     }
+
 }
