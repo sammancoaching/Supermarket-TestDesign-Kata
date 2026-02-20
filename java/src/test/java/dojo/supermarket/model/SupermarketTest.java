@@ -8,12 +8,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class SupermarketTest {
 
     private final SupermarketCatalog catalog = new FakeCatalog();
+    private final Teller teller = new Teller(catalog);
     private final ShoppingCart cart = new ShoppingCart();
     private final Product toothbrush = new Product("toothbrush", ProductUnit.EACH);
     private final Product rice = new Product("rice", ProductUnit.EACH);
     private final Product cherryTomatoes = new Product("cherry Tomato box", ProductUnit.EACH);
     private final Product apples = new Product("apples", ProductUnit.KILO);
-    private Teller teller;
 
     @BeforeEach
     public void setup() {
@@ -22,7 +22,6 @@ public class SupermarketTest {
         catalog.addProduct(toothbrush, 0.99);
         catalog.addProduct(cherryTomatoes, 0.69);
         catalog.addProduct(apples, 1.99);
-        teller = new Teller(catalog);
     }
 
     @Test
