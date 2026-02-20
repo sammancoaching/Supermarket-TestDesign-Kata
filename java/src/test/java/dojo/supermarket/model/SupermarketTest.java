@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class SupermarketTest {
+class SupermarketTest {
 
     private final SupermarketCatalog catalog = new FakeCatalog();
     private final Teller teller = new Teller(catalog);
@@ -16,7 +16,7 @@ public class SupermarketTest {
     private final Product apples = new Product("apples", ProductUnit.KILO);
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         catalog.addProduct(toothbrush, 0.99);
         catalog.addProduct(rice, 2.99);
         catalog.addProduct(toothbrush, 0.99);
@@ -25,7 +25,7 @@ public class SupermarketTest {
     }
 
     @Test
-    public void twoNormalItems() {
+    void twoNormalItems() {
         cart.addItem(toothbrush);
         cart.addItem(rice);
 
@@ -35,7 +35,7 @@ public class SupermarketTest {
     }
 
     @Test
-    public void buyTwoGetOneFree() {
+    void buyTwoGetOneFree() {
         cart.addItem(toothbrush);
         cart.addItem(toothbrush);
         cart.addItem(toothbrush);
@@ -47,7 +47,7 @@ public class SupermarketTest {
     }
 
     @Test
-    public void xForYDiscount() {
+    void xForYDiscount() {
         cart.addItem(cherryTomatoes);
         cart.addItem(cherryTomatoes);
         teller.addSpecialOffer(SpecialOfferType.TWO_FOR_AMOUNT, cherryTomatoes, 0.99);
@@ -58,7 +58,7 @@ public class SupermarketTest {
     }
 
     @Test
-    public void FiveForYDiscount() {
+    void FiveForYDiscount() {
         cart.addItemQuantity(apples, 5);
         teller.addSpecialOffer(SpecialOfferType.FIVE_FOR_AMOUNT, apples, 6.99);
 
@@ -66,4 +66,5 @@ public class SupermarketTest {
 
         assertEquals(6.99, receipt.getTotalPrice(), 0.01);
     }
+
 }
