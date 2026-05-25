@@ -11,7 +11,7 @@ public class SupermarketXUnitTest
 {
     
     [Fact]
-    public void TwoNormalItems()
+    public void TwoNormalItems_TotalPriceIsSumOfIndividualPrices()
     {
         SupermarketCatalog catalog = new FakeCatalog();
         var toothbrush = new Product("toothbrush", ProductUnit.Each);
@@ -20,62 +20,62 @@ public class SupermarketXUnitTest
         catalog.AddProduct(rice, 2.99);
         var teller = new Teller(catalog);   
         var shoppingCart = new ShoppingCart();
-        
         shoppingCart.AddItem(toothbrush);
         shoppingCart.AddItem(rice);
+
         Receipt receipt = teller.ChecksOutArticlesFrom(shoppingCart);
-        
+
         Assert.Equal(3.98, receipt.GetTotalPrice(), 0.01);
     }
     
     [Fact]
-    public void BuyTwoGetOneFree()
+    public void ThreeForTwoOffer_ThirdItemIsFree()
     {
         SupermarketCatalog catalog = new FakeCatalog();
         var toothbrush = new Product("toothbrush", ProductUnit.Each);
         catalog.AddProduct(toothbrush, 0.99);
         var teller = new Teller(catalog);   
         var shoppingCart = new ShoppingCart();
-        
         shoppingCart.AddItem(toothbrush);
         shoppingCart.AddItem(toothbrush);
         shoppingCart.AddItem(toothbrush);
         teller.AddSpecialOffer(SpecialOfferType.ThreeForTwo, toothbrush, catalog.GetUnitPrice(toothbrush));
+
         Receipt receipt = teller.ChecksOutArticlesFrom(shoppingCart);
-        
+
         Assert.Equal(1.98, receipt.GetTotalPrice(), 0.01);
     }
 
     [Fact]
-    public void XForYDiscount()
+    public void TwoForAmountOffer_PriceIsReducedToBundlePrice()
     {
         SupermarketCatalog catalog = new FakeCatalog();
         var cherryTomatoes = new Product("cherry tomato box", ProductUnit.Each);
         catalog.AddProduct(cherryTomatoes, 0.69);
         var teller = new Teller(catalog);   
         var shoppingCart = new ShoppingCart();
-        
         shoppingCart.AddItem(cherryTomatoes);
         shoppingCart.AddItem(cherryTomatoes);
         teller.AddSpecialOffer(SpecialOfferType.TwoForAmount, cherryTomatoes, 0.99);
+
         Receipt receipt = teller.ChecksOutArticlesFrom(shoppingCart);
-        
+
         Assert.Equal(0.99, receipt.GetTotalPrice(), 0.01);
     } 
     
     [Fact]
-    public void FiveForYDiscount()
+    public void FiveForAmountOffer_PriceIsReducedToBundlePrice()
     {
         SupermarketCatalog catalog = new FakeCatalog();
         var apples = new Product("apples", ProductUnit.Kilo);
         catalog.AddProduct(apples, 1.99);
         var teller = new Teller(catalog);   
         var shoppingCart = new ShoppingCart();
-        
         shoppingCart.AddItemQuantity(apples, 5);
         teller.AddSpecialOffer(SpecialOfferType.FiveForAmount, apples, 6.99);
+
         Receipt receipt = teller.ChecksOutArticlesFrom(shoppingCart);
-        
+
         Assert.Equal(6.99, receipt.GetTotalPrice(), 0.01);
     } 
 }
