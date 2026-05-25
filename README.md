@@ -26,3 +26,4 @@ There are four test cases that all use the following pattern:
 
 The arrange parts of the existing test contain duplicated code. Get rid of the duplicated code by introducing a test fixture.
 
+
