@@ -11,7 +11,7 @@ import {expect} from "chai";
 
 describe('Supermarket', function () {
 
-    it("two normal items", () => {
+    it("TwoNormalItems_TotalPriceIsSumOfIndividualPrices", () => {
         const catalog: SupermarketCatalog = new FakeCatalog();
         const toothbrush: Product = new Product("toothbrush", ProductUnit.Each);
         catalog.addProduct(toothbrush, 0.99);
@@ -20,18 +20,15 @@ describe('Supermarket', function () {
         const teller: Teller = new Teller(catalog);
         const cart: ShoppingCart = new ShoppingCart();
 
-        // ACT
         cart.addItem(toothbrush);
         cart.addItem(rice)
         const receipt: Receipt = teller.checksOutArticlesFrom(cart);
 
-        // ASSERT
         expect(receipt.getTotalPrice()).closeTo(3.98, 0.01);
-
     })
 
 
-    it("two get one free", () => {
+    it("ThreeForTwoOffer_ThirdItemIsFree", () => {
         const catalog: SupermarketCatalog = new FakeCatalog();
         const toothbrush: Product = new Product("toothbrush", ProductUnit.Each);
         catalog.addProduct(toothbrush, 0.99);
@@ -40,50 +37,42 @@ describe('Supermarket', function () {
         const teller: Teller = new Teller(catalog);
         const cart: ShoppingCart = new ShoppingCart();
 
-        // ACT
         cart.addItem(toothbrush);
         cart.addItem(toothbrush);
         cart.addItem(toothbrush);
         teller.addSpecialOffer(SpecialOfferType.ThreeForTwo, toothbrush, catalog.getUnitPrice(toothbrush));
         const receipt: Receipt = teller.checksOutArticlesFrom(cart);
 
-        // ASSERT
         expect(receipt.getTotalPrice()).closeTo(1.98, 0.01);
-
     })
 
 
-    it("x for y discount", () => {
+    it("TwoForAmountOffer_PriceIsReducedToBundlePrice", () => {
         const catalog: SupermarketCatalog = new FakeCatalog();
         const cherryTomatoes: Product = new Product("cherry Tomato box", ProductUnit.Each);
         catalog.addProduct(cherryTomatoes, 0.69);
         const teller: Teller = new Teller(catalog);
         const cart: ShoppingCart = new ShoppingCart();
 
-        // ACT
         cart.addItem(cherryTomatoes);
         cart.addItem(cherryTomatoes);
         teller.addSpecialOffer(SpecialOfferType.TwoForAmount, cherryTomatoes, 0.99);
         const receipt: Receipt = teller.checksOutArticlesFrom(cart);
 
-        // ASSERT
         expect(receipt.getTotalPrice()).closeTo(0.99, 0.01);
-
     })
 
-    it("five for y discount", () => {
+    it("FiveForAmountOffer_PriceIsReducedToBundlePrice", () => {
         const catalog: SupermarketCatalog = new FakeCatalog();
         const apples: Product = new Product("apples", ProductUnit.Kilo);
         catalog.addProduct(apples, 1.99);
         const teller: Teller = new Teller(catalog);
         const cart: ShoppingCart = new ShoppingCart();
 
-        // ACT
         cart.addItemQuantity(apples, 5);
         teller.addSpecialOffer(SpecialOfferType.FiveForAmount, apples, 6.99);
         const receipt: Receipt = teller.checksOutArticlesFrom(cart);
 
-        // ASSERT
         expect(receipt.getTotalPrice()).closeTo(6.99, 0.01);
     })
 });

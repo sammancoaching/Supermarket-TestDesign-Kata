@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class SupermarketTest {
 
     @Test
-    void twoNormalItems() {
+    void TwoNormalItems_TotalPriceIsSumOfIndividualPrices() {
         SupermarketCatalog catalog = new FakeCatalog();
         Product toothbrush = new Product("toothbrush", ProductUnit.EACH);
         catalog.addProduct(toothbrush, 0.99);
@@ -18,66 +18,58 @@ class SupermarketTest {
         Teller teller = new Teller(catalog);
         ShoppingCart cart = new ShoppingCart();
 
-        // ACT
         cart.addItem(toothbrush);
         cart.addItem(rice);
         Receipt receipt = teller.checksOutArticlesFrom(cart);
 
-        // ASSERT
         assertEquals(3.98, receipt.getTotalPrice(), 0.01);
     }
 
     @Test
-    void buyTwoGetOneFree() {
+    void ThreeForTwoOffer_ThirdItemIsFree() {
         SupermarketCatalog catalog = new FakeCatalog();
         Product toothbrush = new Product("toothbrush", ProductUnit.EACH);
         catalog.addProduct(toothbrush, 0.99);
         Teller teller = new Teller(catalog);
         ShoppingCart cart = new ShoppingCart();
 
-        // ACT
         cart.addItem(toothbrush);
         cart.addItem(toothbrush);
         cart.addItem(toothbrush);
         teller.addSpecialOffer(SpecialOfferType.THREE_FOR_TWO, toothbrush, catalog.getUnitPrice(toothbrush));
         Receipt receipt = teller.checksOutArticlesFrom(cart);
 
-        // ASSERT
         assertEquals(1.98, receipt.getTotalPrice(), 0.01);
     }
 
     @Test
-    void xForYDiscount() {
+    void TwoForAmountOffer_PriceIsReducedToBundlePrice() {
         SupermarketCatalog catalog = new FakeCatalog();
         Product cherryTomatoes = new Product("cherry Tomato box", ProductUnit.EACH);
         catalog.addProduct(cherryTomatoes, 0.69);
         Teller teller = new Teller(catalog);
         ShoppingCart cart = new ShoppingCart();
 
-        // ACT
         cart.addItem(cherryTomatoes);
         cart.addItem(cherryTomatoes);
         teller.addSpecialOffer(SpecialOfferType.TWO_FOR_AMOUNT, cherryTomatoes, 0.99);
         Receipt receipt = teller.checksOutArticlesFrom(cart);
 
-        // ASSERT
         assertEquals(0.99, receipt.getTotalPrice(), 0.01);
     }
 
     @Test
-    void FiveForYDiscount() {
+    void FiveForAmountOffer_PriceIsReducedToBundlePrice() {
         SupermarketCatalog catalog = new FakeCatalog();
         Product apples = new Product("apples", ProductUnit.KILO);
         catalog.addProduct(apples, 1.99);
         Teller teller = new Teller(catalog);
         ShoppingCart cart = new ShoppingCart();
 
-        // ACT
         cart.addItemQuantity(apples, 5);
         teller.addSpecialOffer(SpecialOfferType.FIVE_FOR_AMOUNT, apples, 6.99);
         Receipt receipt = teller.checksOutArticlesFrom(cart);
 
-        // ASSERT
         assertEquals(6.99, receipt.getTotalPrice(), 0.01);
     }
 

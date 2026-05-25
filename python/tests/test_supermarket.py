@@ -18,7 +18,7 @@ class FakeCatalog(SupermarketCatalog):
         return self._prices[product.name]
 
 
-def test_two_normal_items() -> None:
+def test_two_normal_items_total_price_is_sum_of_individual_prices() -> None:
     catalog: SupermarketCatalog = FakeCatalog()
     toothbrush: Product = Product("toothbrush", ProductUnit.EACH)
     catalog.add_product(toothbrush, 0.99)
@@ -34,7 +34,7 @@ def test_two_normal_items() -> None:
     assert receipt.total_price() == pytest.approx(3.98)
 
 
-def test_buy_two_get_one_for_free() -> None:
+def test_three_for_two_offer_third_item_is_free() -> None:
     catalog: SupermarketCatalog = FakeCatalog()
     toothbrush: Product = Product("toothbrush", ProductUnit.EACH)
     catalog.add_product(toothbrush, 0.99)
@@ -48,10 +48,11 @@ def test_buy_two_get_one_for_free() -> None:
         SpecialOfferType.THREE_FOR_TWO, toothbrush, catalog.unit_price(toothbrush)
     )
     receipt: Receipt = teller.checks_out_articles_from(cart)
+
     assert receipt.total_price() == pytest.approx(1.98)
 
 
-def test_x_for_y_discount() -> None:
+def test_two_for_amount_offer_price_is_reduced_to_bundle_price() -> None:
     catalog: SupermarketCatalog = FakeCatalog()
     cherry_tomatoes: Product = Product("cherry Tomato box", ProductUnit.EACH)
     catalog.add_product(cherry_tomatoes, 0.69)
@@ -62,10 +63,11 @@ def test_x_for_y_discount() -> None:
     cart.add_item(cherry_tomatoes)
     teller.add_special_offer(SpecialOfferType.TWO_FOR_AMOUNT, cherry_tomatoes, 0.99)
     receipt: Receipt = teller.checks_out_articles_from(cart)
+
     assert receipt.total_price() == pytest.approx(0.99)
 
 
-def test_five_for_y_discount() -> None:
+def test_five_for_amount_offer_price_is_reduced_to_bundle_price() -> None:
     catalog: SupermarketCatalog = FakeCatalog()
     apples: Product = Product("apples", ProductUnit.KILO)
     catalog.add_product(apples, 1.99)
@@ -74,6 +76,6 @@ def test_five_for_y_discount() -> None:
 
     cart.add_item_quantity(apples, 5.0)
     teller.add_special_offer(SpecialOfferType.FIVE_FOR_AMOUNT, apples, 6.99)
-
     receipt: Receipt = teller.checks_out_articles_from(cart)
+
     assert receipt.total_price() == pytest.approx(6.99)
